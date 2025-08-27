@@ -1,6 +1,9 @@
 import { Hono } from 'hono'
 import { csrf } from 'hono/csrf'
 import { cors } from 'hono/cors'
+
+import { dbMiddleware } from '../../middleware/db.js'
+
 import googleProvider from './auth/providers/google/route.js'
 import session from './auth/session/route.js'
 
@@ -14,6 +17,9 @@ v1.use('*', cors({
 }))
 
 v1.use(csrf())
+
+v1.use('*', dbMiddleware)
+
 v1.route('/auth/providers/google', googleProvider)
 v1.route('/auth/session', session)
 

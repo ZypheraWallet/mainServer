@@ -1,12 +1,9 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import v1 from './api/v1/index.js'
-import { connectDB } from './db/mongoose.js'
 import 'dotenv/config'
 
 const app = new Hono()
-
-connectDB()
 
 app.route('/api/v1', v1)
 
