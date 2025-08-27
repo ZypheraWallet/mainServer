@@ -51,3 +51,36 @@ export async function getSessionByAccessToken(accessToken: string) {
 export async function deleteSession(accessToken: string) {
     return Session.deleteOne({ token: accessToken })
 }
+
+
+export async function refreshToken(oldRefreshToken: string, jwtSecret: string) {
+
+    if (!jwtSecret) throw new Error('jwtSecret not defined')
+
+    let payload: any
+    try {
+        payload = await verify(oldRefreshToken, jwtSecret)
+        if (!payload || payload.type !== 'refresh') throw new Error('Invalid token')
+    } catch {
+        throw new Error('Invalid refresh token')
+    }
+
+    const session = await Session.findOne({ refreshToken: oldRefreshToken })
+    if (!session) throw new Error('Session not found')
+
+    const userId = session.userId.toString()
+
+    const accessToken = await sign({ sub: userId, type: 'access' }, jwtSecret, 'HS256')
+
+
+    const newRefreshToken = await sign({ sub: userId, type: 'refresh' }, jwtSecret, 'HS256')
+
+    session.refreshToken = newRefreshToken
+    session.updatedAt = new Date()
+    await session.save()
+
+    return {
+        accessToken,
+        refreshToken: newRefreshToken,
+    }
+}
