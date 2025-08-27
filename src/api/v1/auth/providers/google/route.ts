@@ -21,6 +21,7 @@ google.get('/getLink', async (c) => {
         secure: true,
         httpOnly: true,
         maxAge: 300,
+        domain: '.vercel.app'
     })
 
     const params = new URLSearchParams({
@@ -99,6 +100,7 @@ google.get('/callback', async (c) => {
         sameSite: 'None',
         path: '/',
         maxAge: 15 * 60,
+        domain: '.vercel.app'
     })
 
     setCookie(c, 'zyphera_refresh', refreshToken, {
@@ -107,6 +109,7 @@ google.get('/callback', async (c) => {
         sameSite: 'None',
         path: '/',
         maxAge: 30 * 24 * 60 * 60,
+        domain: '.vercel.app'
     })
 
 
