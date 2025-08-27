@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { getCookie, setCookie } from 'hono/cookie'
+import { getCookie } from 'hono/cookie'
 import { refreshToken } from '../../../../utils/sessions.js'
 import { env } from 'hono/adapter'
 
@@ -12,7 +12,7 @@ session.post('/refresh', async (c) => {
 
     try {
         const { accessToken, newRefreshToken } = await refreshToken(oldRefreshToken, JWT_SECRET)
-        console.log('token updated #1')
+        console.log('token updated #1', accessToken, newRefreshToken)
 
         return c.json({ accessToken, newRefreshToken })
     } catch (err) {
