@@ -21,7 +21,7 @@ google.get('/getLink', async (c) => {
         secure: true,
         sameSite: 'None',
         path: '/',
-        domain: '.vercel.app',
+        domain: '.zyphera.vercel.app',
         maxAge: 10 * 60,
     })
 
@@ -101,7 +101,7 @@ google.get('/callback', async (c) => {
         sameSite: 'None',
         path: '/',
         maxAge: 15 * 60,
-        domain: '.vercel.app'
+        domain: '.zyphera.vercel.app',
     })
 
     setCookie(c, 'zyphera_refresh', refreshToken, {
@@ -110,7 +110,7 @@ google.get('/callback', async (c) => {
         sameSite: 'None',
         path: '/',
         maxAge: 30 * 24 * 60 * 60,
-        domain: '.vercel.app'
+        domain: '.zyphera.vercel.app',
     })
 
 

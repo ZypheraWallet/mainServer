@@ -6,7 +6,7 @@ import googleProvider from './auth/providers/google/route.js'
 const v1 = new Hono()
 
 v1.use('*', cors({
-    origin: 'https://web-wallet-sepia.vercel.app',
+    origin: 'https://wallet.zyphera.vercel.app',
     allowMethods: ['GET', 'POST', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
