@@ -100,8 +100,8 @@ google.get('/callback', async (c) => {
         secure: true,
         sameSite: 'None',
         path: '/',
-        maxAge: 15 * 60,
         domain: '.zyphera.vercel.app',
+        maxAge: 15 * 60,
     })
 
     setCookie(c, 'zyphera_refresh', refreshToken, {
@@ -109,8 +109,8 @@ google.get('/callback', async (c) => {
         secure: true,
         sameSite: 'None',
         path: '/',
-        maxAge: 30 * 24 * 60 * 60,
         domain: '.zyphera.vercel.app',
+        maxAge: 30 * 24 * 60 * 60,
     })
 
 
