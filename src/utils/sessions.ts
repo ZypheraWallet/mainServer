@@ -81,6 +81,6 @@ export async function refreshToken(oldRefreshToken: string, jwtSecret: string) {
 
     return {
         accessToken,
-        refreshToken: newRefreshToken,
+        newRefreshToken,
     }
 }

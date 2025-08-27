@@ -11,25 +11,9 @@ session.post('/refresh', async (c) => {
     if (!oldRefreshToken) return c.json({ error: 'No refresh token' }, 401)
 
     try {
-        const { accessToken, refreshToken: newRefreshToken } = await refreshToken(oldRefreshToken, JWT_SECRET)
+        const { accessToken, newRefreshToken } = await refreshToken(oldRefreshToken, JWT_SECRET)
 
-        setCookie(c, 'zyphera_access', accessToken, {
-            httpOnly: false,
-            path: '/',
-            maxAge: 15 * 60,
-            sameSite: 'Lax',
-            secure: true,
-        })
-
-        setCookie(c, 'zyphera_refresh', newRefreshToken, {
-            httpOnly: true,
-            path: '/',
-            maxAge: 30 * 24 * 60 * 60,
-            sameSite: 'Lax',
-            secure: true,
-        })
-
-        return c.json({ accessToken })
+        return c.json({ accessToken, newRefreshToken })
     } catch (err) {
         return c.json({ error: 'Invalid refresh token' }, 401)
     }
