@@ -17,11 +17,12 @@ google.get('/getLink', async (c) => {
     const state = Math.random().toString(36).substring(2, 15)
 
     setCookie(c, 'oauth_state', state, {
-        path: '/',
-        secure: true,
         httpOnly: true,
-        maxAge: 300,
-        domain: '.vercel.app'
+        secure: true,
+        sameSite: 'None',
+        path: '/',
+        domain: '.vercel.app',
+        maxAge: 10 * 60,
     })
 
     const params = new URLSearchParams({
