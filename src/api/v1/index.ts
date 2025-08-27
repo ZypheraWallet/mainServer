@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { csrf } from 'hono/csrf'
 import { cors } from 'hono/cors'
 
 import { dbMiddleware } from '../../middleware/db.js'
@@ -15,8 +14,6 @@ v1.use('*', cors({
     allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
     credentials: true,
 }))
-
-v1.use(csrf())
 
 v1.use('*', dbMiddleware)
 
