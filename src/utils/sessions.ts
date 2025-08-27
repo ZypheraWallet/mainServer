@@ -54,6 +54,7 @@ export async function deleteSession(accessToken: string) {
 
 
 export async function refreshToken(oldRefreshToken: string, jwtSecret: string) {
+    console.log('Refresh token function called with token:', oldRefreshToken.substring(0, 10) + '...')
 
     if (!jwtSecret) throw new Error('jwtSecret not defined')
 
@@ -61,23 +62,29 @@ export async function refreshToken(oldRefreshToken: string, jwtSecret: string) {
     try {
         payload = await verify(oldRefreshToken, jwtSecret)
         if (!payload || payload.type !== 'refresh') throw new Error('Invalid token')
-    } catch {
+        console.log('Token verified successfully, payload:', payload)
+    } catch (error) {
+        console.error('Token verification failed:', error)
         throw new Error('Invalid refresh token')
     }
 
+    console.log('Looking for session with token:', oldRefreshToken.substring(0, 10) + '...')
     const session = await Session.findOne({ refreshToken: oldRefreshToken })
+    console.log('Session found:', session ? session._id : 'None')
+
     if (!session) throw new Error('Session not found')
 
     const userId = session.userId.toString()
+    console.log('User ID from session:', userId)
 
     const accessToken = await sign({ sub: userId, type: 'access' }, jwtSecret, 'HS256')
-
-
     const newRefreshToken = await sign({ sub: userId, type: 'refresh' }, jwtSecret, 'HS256')
 
+    console.log('New tokens generated, updating session...')
     session.refreshToken = newRefreshToken
     session.updatedAt = new Date()
     await session.save()
+    console.log('Session updated successfully')
 
     return {
         accessToken,
