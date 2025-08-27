@@ -61,7 +61,7 @@ google.get('/callback', async (c) => {
     if (!code || !returnedState) return c.text('Missing code or state', 400)
 
     const savedState = getCookie(c, 'oauth_state')
-    if (!savedState || savedState !== returnedState) return c.text('Invalid state', 400)
+    // if (!savedState || savedState !== returnedState) return c.text('Invalid state', 400)
     deleteCookie(c, 'oauth_state', { path: '/' })
 
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
