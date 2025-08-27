@@ -12,7 +12,7 @@ const v1 = new Hono()
 v1.use('*', cors({
     origin: 'https://wallet.zyphera.vercel.app',
     allowMethods: ['GET', 'POST', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization'],
+    allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
     credentials: true,
 }))
 
