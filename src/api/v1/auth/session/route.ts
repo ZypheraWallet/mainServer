@@ -12,7 +12,6 @@ session.post('/refresh', async (c) => {
 
     try {
         const { accessToken, newRefreshToken } = await refreshToken(oldRefreshToken, JWT_SECRET)
-        console.log('token updated #1', accessToken, newRefreshToken)
 
         return c.json({ accessToken, newRefreshToken })
     } catch (err) {
