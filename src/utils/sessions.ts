@@ -1,7 +1,7 @@
 import { Session } from '../models/Session.js'
 import { sign, verify } from 'hono/jwt'
 
-const accessTokenExpiresIn = 15 * 60
+const accessTokenExpiresIn = 2 * 60
 const refreshTokenExpiresIn = 30 * 24 * 60 * 60
 
 export async function createSession(userId: string, jwtSecret: string) {
