@@ -101,7 +101,7 @@ google.get('/callback', async (c) => {
         type: 'google-auth-success',
         accessToken: "${accessToken}",
         refreshToken: "${refreshToken}"
-      }, "http://localhost:3000/");
+      }, "${FRONTEND_URL}");
       window.close();
     </script>
   `)
