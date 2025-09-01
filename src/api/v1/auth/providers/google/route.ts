@@ -7,22 +7,25 @@ import { createSession } from '../../../../../utils/sessions.js'
 const google = new Hono()
 
 google.get('/getLink', async (c) => {
-    const { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URI } = env<{
+    const { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URI, FRONTEND_URL } = env<{
         GOOGLE_CLIENT_ID: string
         GOOGLE_REDIRECT_URI: string
+        FRONTEND_URL:string
     }>(c)
 
     const GOOGLE_SCOPE = ['openid', 'profile', 'email'].join(' ')
 
     const state = Math.random().toString(36).substring(2, 15)
 
+    const isLocalhost = FRONTEND_URL.includes('localhost')
+    
     setCookie(c, 'oauth_state', state, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'None',
-        path: '/',
-        domain: '.zyphera.vercel.app',
-        maxAge: 10 * 60,
+      httpOnly: true,
+      secure: !isLocalhost,
+      sameSite: isLocalhost ? 'Lax' : 'None',
+      path: '/',
+      domain: isLocalhost ? undefined : '.zyphera.vercel.app',
+      maxAge: 10 * 60,
     })
 
     const params = new URLSearchParams({
