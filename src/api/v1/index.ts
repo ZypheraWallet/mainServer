@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import 'dotenv/config'
 
 import { dbMiddleware } from '../../middleware/db.js'
 
@@ -9,10 +8,14 @@ import session from './auth/session/route.js'
 
 const v1 = new Hono()
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3001'
-
 v1.use('*', cors({
-  origin: FRONTEND_URL,
+  origin: (origin) => {
+    const allowed = [
+      'http://localhost:3001',
+      'https://wallet.zyphera.vercel.app'
+    ]
+    return allowed.includes(origin ?? '') ? origin : undefined
+  },
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
   credentials: true,
