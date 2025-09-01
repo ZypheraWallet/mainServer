@@ -9,7 +9,7 @@ import session from './auth/session/route.js'
 const v1 = new Hono()
 
 v1.use('*', cors({
-    origin: 'https://wallet.zyphera.vercel.app',
+    origin: '*',
     allowMethods: ['GET', 'POST', 'OPTIONS'],
     allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
     credentials: true,
