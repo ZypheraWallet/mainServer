@@ -5,21 +5,15 @@ import { dbMiddleware } from '../../middleware/db.js'
 
 import googleProvider from './auth/providers/google/route.js'
 import session from './auth/session/route.js'
+import 'dotenv/config'
 
 const v1 = new Hono()
 
 v1.use('*', cors({
-  origin: (origin) => {
-    const allowed = [
-      'https://wallet.zyphera.vercel.app',
-      'http://localhost:3000',
-      'http://127.0.0.1:3000'
-    ]
-    return allowed.includes(origin ?? '') ? origin : 'https://wallet.zyphera.vercel.app'
-  },
-  allowMethods: ['GET', 'POST', 'OPTIONS'],
-  allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
-  credentials: true,
+    origin: `${process.env.FRONTEND_URL}`,
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['Cookie', 'Content-Type', 'Authorization'],
+    credentials: true,
 }))
 
 v1.use('*', dbMiddleware)
