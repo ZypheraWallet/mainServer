@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import 'dotenv/config'
 
 import { dbMiddleware } from '../../middleware/db.js'
 
