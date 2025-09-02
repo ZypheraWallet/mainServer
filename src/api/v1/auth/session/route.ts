@@ -6,8 +6,16 @@ import { env } from 'hono/adapter'
 const session = new Hono()
 
 session.post('/refresh', async (c) => {
-    const { JWT_SECRET } = env<{ JWT_SECRET: string }>(c)
-    const oldRefreshToken = getCookie(c, 'zyphera_refresh')
+    const { JWT_SECRET } = env<{
+        JWT_SECRET: string,
+    }>(c)
+    const authHeader = c.req.header('Authorization')
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return c.json({ error: 'Authorization header missing or invalid' }, 401)
+    }
+
+    const oldRefreshToken = authHeader.substring(7)
     if (!oldRefreshToken) return c.json({ error: 'No refresh token' }, 401)
 
     try {

@@ -27,6 +27,7 @@ export async function createSession(userId: string, jwtSecret: string) {
     await Session.create({
         userId,
         refreshToken,
+        accessToken,
         scopes: ['*'],
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -84,6 +85,7 @@ export async function refreshToken(oldRefreshToken: string, jwtSecret: string) {
         exp: Math.floor(Date.now() / 1000) + refreshTokenExpiresIn,
     }, jwtSecret)
 
+    session.accessToken = accessToken
     session.refreshToken = newRefreshToken
     session.updatedAt = new Date()
     await session.save()
