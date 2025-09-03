@@ -1,17 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose'
-
-export interface ISession extends Document {
-    userId: mongoose.Types.ObjectId
-    device?: string
-    platform?: string
-    ip?: string
-    scopes: string[]
-    accessToken: string
-    refreshToken: string
-    createdAt: Date
-    updatedAt: Date
-    expiresAt?: Date
-}
+import mongoose, { Schema } from 'mongoose'
+import { type ISession } from '../../types/models.js'
 
 const SessionSchema = new Schema<ISession>({
     userId: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
