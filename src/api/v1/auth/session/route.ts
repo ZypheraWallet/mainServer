@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { getCookie } from 'hono/cookie'
 import { refreshToken } from '../../../../utils/sessions.js'
 import { env } from 'hono/adapter'
 
