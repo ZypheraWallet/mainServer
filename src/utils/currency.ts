@@ -9,7 +9,7 @@ export interface CacheData {
     timestamp: number;
 }
 
-const CACHE_DURATION = 5 * 60 * 1000;
+const CACHE_DURATION = 15 * 60 * 1000;
 const cache: Map<CurrencyCode, CacheData> = new Map();
 
 async function fetchExchangeRates(baseCurrency: CurrencyCode): Promise<ExchangeRates> {
